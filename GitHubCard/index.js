@@ -162,7 +162,7 @@ function createCard (githubObj) {
   
   profLink.href = githubObj.html_url;
   infoFollowers.textContent = `Followers: ${githubObj.followers}`;
-  infoFollowing.textContent = `Followers: ${githubObj.following}`;
+  infoFollowing.textContent = `Following: ${githubObj.following}`;
   infoBio.textContent = githubObj.bio;
 
   return cardDiv;
