@@ -15,17 +15,22 @@ function getGit (name) {
       .then((res) => {
         // if the call is successful, it runs this callback
         console.log('Here is the res: ', res);
-        resObject = res.data;
-        console.log (`resData --> ${res.data}`)
-        console.log (`resObject --> ${resObject.name}`);
-
+      
         let cards = document.querySelector ('.cards');
         let newCard = createCard (res.data);
         cards.appendChild (newCard);
+        // contrib graph
+        let graphDiv = document.createElement ('div');
+        let graph = document.createElement ('img');
+        graphDiv.appendChild (graph);
+        newCard.appendChild (graphDiv);
+        graphDiv.classList.add ('graph');
         
-        // res.data.message.forEach((url) => {
-        // entrypoint.append(DogCard(url));
-        // });
+        
+        graph.src = `http://ghchart.rshah.org/${name}`
+   
+        console.log (cal);
+
       })
       .catch((err) => {
         // if the call is unsuccessful, it runs this callback
@@ -33,9 +38,6 @@ function getGit (name) {
       });
 
 };
-
-getGit ('markrogo');
-
 
 
 let followersArray = [];
@@ -53,11 +55,6 @@ function getFollowers (name) {
         let name = item.login;
         getGit (name);
       });
-      
-      
-      // res.data.message.forEach((url) => {
-      // entrypoint.append(DogCard(url));
-      // });
     })
     .catch((err) => {
       // if the call is unsuccessful, it runs this callback
@@ -66,6 +63,68 @@ function getFollowers (name) {
 
   };
 
+  function createCard (githubObj) {
+    // creates first three parts
+    let cardDiv = document.createElement ('div');
+    let cardImg = document.createElement ('img');
+    let infoDiv = document.createElement ('div');
+  
+    // appends image and card info to main div
+    cardDiv.appendChild(cardImg);
+    cardDiv.appendChild(infoDiv);
+  
+    // create all remaining elements
+    let infoHead = document.createElement ('h3');
+    let infoName = document.createElement ('p');
+    let infoLoc = document.createElement ('p');
+    let infoProf = document.createElement ('p');
+    let profLink = document.createElement ('a');
+  
+    let infoFollowers = document.createElement ('p');
+    let infoFollowing = document.createElement ('p');
+  
+    let infoBio = document.createElement ('p');
+
+   
+    
+  
+    // append everything
+    infoDiv.appendChild (infoHead);
+    infoDiv.appendChild (infoName);
+    infoDiv.appendChild (infoLoc);
+    // add anchor to prof before adding prof to div ??
+    infoProf.appendChild (profLink);
+    infoDiv.appendChild (infoProf);
+  
+    infoDiv.appendChild (infoFollowers);
+    infoDiv.appendChild (infoFollowing);
+
+   
+    // add styles 
+    cardDiv.classList.add ('card');
+    infoDiv.classList.add ('card-info');
+    infoHead.classList.add ('name');
+    infoName.classList.add ('username');
+
+     
+  
+    // add attributes and text content
+    cardImg.src = githubObj.avatar_url;
+    infoHead.textContent = githubObj.login;
+    infoName.textContent = githubObj.name;
+    infoLoc.textContent = githubObj.location;
+    profLink.textContent = githubObj.html_url;
+    
+    profLink.href = githubObj.html_url;
+    infoFollowers.textContent = `Followers: ${githubObj.followers}`;
+    infoFollowing.textContent = `Following: ${githubObj.following}`;
+    infoBio.textContent = githubObj.bio;
+  
+    return cardDiv;
+    
+  };
+  
+  getGit ('markrogo');
   getFollowers ('markrogo');
 // 
 /*
@@ -114,60 +173,6 @@ function getFollowers (name) {
     </div>
 */
 
-function createCard (githubObj) {
-  // creates first three parts
-  let cardDiv = document.createElement ('div');
-  let cardImg = document.createElement ('img');
-  let infoDiv = document.createElement ('div');
-
-  // appends image and card info to main div
-  cardDiv.appendChild(cardImg);
-  cardDiv.appendChild(infoDiv);
-
-  // create all remaining elements
-  let infoHead = document.createElement ('h3');
-  let infoName = document.createElement ('p');
-  let infoLoc = document.createElement ('p');
-  let infoProf = document.createElement ('p');
-  let profLink = document.createElement ('a');
-
-  let infoFollowers = document.createElement ('p');
-  let infoFollowing = document.createElement ('p');
-
-  let infoBio = document.createElement ('p');
-
-  // append everything
-  infoDiv.appendChild (infoHead);
-  infoDiv.appendChild (infoName);
-  infoDiv.appendChild (infoLoc);
-  // add anchor to prof before adding prof to div ??
-  infoProf.appendChild (profLink);
-  infoDiv.appendChild (infoProf);
-
-  infoDiv.appendChild (infoFollowers);
-  infoDiv.appendChild (infoFollowing);
-
-  // add styles 
-  cardDiv.classList.add ('card');
-  infoDiv.classList.add ('card-info');
-  infoHead.classList.add ('name');
-  infoName.classList.add ('username');
-
-  // add attributes and text content
-  cardImg.src = githubObj.avatar_url;
-  infoHead.textContent = githubObj.login;
-  infoName.textContent = githubObj.name;
-  infoLoc.textContent = githubObj.location;
-  profLink.textContent = githubObj.html_url;
-  
-  profLink.href = githubObj.html_url;
-  infoFollowers.textContent = `Followers: ${githubObj.followers}`;
-  infoFollowing.textContent = `Following: ${githubObj.following}`;
-  infoBio.textContent = githubObj.bio;
-
-  return cardDiv;
-  
-}
 
 
 
