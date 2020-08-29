@@ -62,13 +62,14 @@ body {
   background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
 }
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 50px auto;
   padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 
 .header {
   width: 100%;
@@ -123,5 +124,7 @@ body {
   margin: 3px 0 10px;
 }
 
-
+.graph img {
+  width: 300px;
+}
 
